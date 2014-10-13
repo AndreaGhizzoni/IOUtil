@@ -11,12 +11,12 @@ import java.util.zip.ZipOutputStream;
 /**
  * This class provide the common method to create a Zip file.<br>
  * How to use:<br>
- * <pre>
+ * <pre>{@code
  * Zipper zip = new Zipper( new File("~/path/to/zip/arch.zip"), new File[]{new File("a.dat"), new File("b.json")} );
  * zip.softZip();
  * (or)
  * zip.forceZip()
- * </pre>
+ * }</pre>
  * See doc of previous method to decide each one to use.
  * 
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com

@@ -13,15 +13,15 @@ import java.io.Serializable;
 /**
  * This class facilitates the Input/Output for serialization operations.<br>
  * For example use this code to store an Integer object on the path "sys/foo/int/int.ser":<br>
- * <pre>
+ * <pre>{@code
  * Integer i = new Integer( 42 );
  * IOSerializable.save( i, new File( "sys/foo/int/int.ser" ) );
- * </pre>
+ * }</pre>
  * And finally use this to retrieve information from serialized object ( for example the previous Integer object ):
- * <pre>
+ * <pre>{@code
  * Integer serializedObject = IOSerializable.load( Integer.class, new File( "sys/foo/int/int.ser" ) );
- * </pre>
- *  
+ * }</pre>
+ *
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
  */

@@ -1,7 +1,7 @@
 package it.hackcaffebabe.ioutil.normalizer;
 
 /**
- * This class holds all method that needs to save a card in JSON.
+ * This class provide a set of common method to remove inconvenient characters.
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
  */

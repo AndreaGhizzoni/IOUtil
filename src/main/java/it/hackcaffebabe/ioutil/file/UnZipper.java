@@ -13,11 +13,11 @@ import java.util.zip.ZipInputStream;
 /**
  * This class provide the common method to unzip a .zip file.<br>
  * How to use:<br>
- * <pre>
+ * <pre>{@code
  * UnZipper uzip = new UnZipper( new File("~/path/to/zip/arch.zip"), new File("~/") );
  * uzip.listZipContent(); (To ONLY view the zip content)
  * uzip.unZip(); (To unzip all the content)
- * </pre>
+ * }</pre>
  * 
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
@@ -48,7 +48,7 @@ public final class UnZipper
 	 * @throws IOException if it incurred a problem while opening the zip file. 
 	 */
 	public synchronized List<String> listZipContent() throws IOException{
-		List<String> toReturn = new ArrayList<>();
+		List<String> toReturn = new ArrayList<String>();
 		ZipInputStream zis = new ZipInputStream( new FileInputStream( this.src ) );
 		ZipEntry ze = zis.getNextEntry();
 		while( ze != null ) {
@@ -69,7 +69,7 @@ public final class UnZipper
 	 * @throws IOException if it incurred a problem while extracts files. 
 	 */
 	public List<File> unZipAll(boolean skipIfExists) throws IOException{
-		List<File> lstFileLoaded = new ArrayList<>();
+		List<File> lstFileLoaded = new ArrayList<File>();
 		ZipInputStream zis = new ZipInputStream( new FileInputStream( this.src ) );
 		ZipEntry ze = zis.getNextEntry();
 		while( ze != null ) {
@@ -104,7 +104,7 @@ public final class UnZipper
 		if(lstFilesToUnzip == null)
 			return null;
 
-		List<File> filesLoaded = new ArrayList<>();
+		List<File> filesLoaded = new ArrayList<File>();
 		ZipInputStream zis = new ZipInputStream( new FileInputStream( this.src ) );
 		ZipEntry ze = zis.getNextEntry();
 		while( ze != null ) {
