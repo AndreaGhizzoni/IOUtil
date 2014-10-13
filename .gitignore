@@ -2,5 +2,6 @@ bin/
 build/classes
 build/tmp
 build/dependency-cache
+build/test-results
 .idea/
 IOUtil.iml
