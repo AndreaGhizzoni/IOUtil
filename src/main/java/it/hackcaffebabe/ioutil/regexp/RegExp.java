@@ -2,23 +2,22 @@ package it.hackcaffebabe.ioutil.regexp;
 
 /**
  * Simple class that provide the most common regular expression validation.<br>
- * 
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
  */
-public class RegExp
+public final class RegExp
 {
 	private static final String CONTAINS_NUMBERS = ".*\\d.*";
-	private static final String CONTAINS_LETTERS = "^[a-zA-Z]+$";
-	private static final String CONTAINS_SPECIAL_CHARACTERS = ".*[\\s?]+.*";
+	private static final String CONTAINS_LETTERS = ".*[a-zA-Z]*.";
+	private static String CONTAINS_SPECIAL_CHARACTERS = ".*[\\s?]+.*";
 	private static final String IS_VALID_EMAIL = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 	private static final String IS_VALID_DATE = "(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)";
 	private static final String IS_VALID_HOURS = "^(([0-1]?[0-9])|([2][0-4])):([0-5]?[0-9])(:([0-5]?[0-9]))?$";
 	private static final String IS_VALID_PHONE = "\\+\\d{2}\\-\\d{10}";
 
-	/**
-	 * Checks string with a Regular Expression given.
-	 */
+    private RegExp(){}
+
+	/* Checks string with a Regular Expression given */
 	private static boolean check(String stringToCheck, String regexp) throws IllegalArgumentException{
 		if(stringToCheck == null || stringToCheck.isEmpty())
 			throw new IllegalArgumentException( "String to check can not be null or empty." );
@@ -37,7 +36,7 @@ public class RegExp
 	}
 
 	/**
-	 * Static method to check if a string contains ONLY letters characters.
+	 * Static method to check if a string contains ONLY characters.
 	 * @param stringToCheck {@link String} string to check with regular expression.
 	 * @return {@link Boolean} true if string contains only letters, otherwise false.
 	 * @throws IllegalArgumentException if argument is null or empty.
@@ -59,22 +58,23 @@ public class RegExp
 			throw new IllegalArgumentException( "You need to specify some special characters to check." );
 
 		StringBuilder builder = new StringBuilder();
-		for(char c: specialCharacters)
-			if(c == '[' || c == ']' || c == '|')
-				builder.append( "\\\\" + c );
-			else builder.append( c );
+		for(char c: specialCharacters) {
+            if (c == '[' || c == ']' || c == '|')
+                builder.append("\\\\");
+            builder.append(c);
+        }
 
 		return check( stringToCheck, CONTAINS_SPECIAL_CHARACTERS.replace( "?", builder.toString() ) );
 	}
 
 	/**
-	 * Check if a String is a Phone number in format "+prefix-number" ( without quotes ).
-	 * @param phoneNumebr {@link String} the complete phone number in format "+prefix-number" ( without quotes ).
+	 * Check if a String is a Phone number in format "+prefix{2}-number{10}" ( without quotes ).
+	 * @param phoneNumber {@link String} the complete phone number in format "+prefix-number" ( without quotes ).
 	 * @return {@link Boolean} true if the phone number is in format "+prefix-number" ( without quotes ).
 	 * @throws IllegalArgumentException if lengths given are less or equal of zero or phone number is null or empty.
 	 */
-	public static boolean isValidPhoneNumber(String phoneNumebr) throws IllegalArgumentException{
-		return check( phoneNumebr, IS_VALID_PHONE );
+	public static boolean isValidPhoneNumber(String phoneNumber) throws IllegalArgumentException{
+		return check( phoneNumber, IS_VALID_PHONE );
 	}
 
 	/**

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="it.hackcaffebabe.ioutil.random.TestXRandom" tests="9" skipped="0" failures="0" errors="0" timestamp="2014-10-13T12:47:31" hostname="voyager" time="0.007">
+  <properties/>
+  <testcase name="testRandomIntNumberWithMinMaxSwap" classname="it.hackcaffebabe.ioutil.random.TestXRandom" time="0.002"/>
+  <testcase name="testRandomIntNumberWithOutOfTheRange" classname="it.hackcaffebabe.ioutil.random.TestXRandom" time="0.0"/>
+  <testcase name="testRandomDateWithIllegalMode" classname="it.hackcaffebabe.ioutil.random.TestXRandom" time="0.001"/>
+  <testcase name="testRandomDateWithNullMode" classname="it.hackcaffebabe.ioutil.random.TestXRandom" time="0.0"/>
+  <testcase name="testRandomStringWithLengthIllegal" classname="it.hackcaffebabe.ioutil.random.TestXRandom" time="0.0"/>
+  <testcase name="testRandomStringWithModeNull" classname="it.hackcaffebabe.ioutil.random.TestXRandom" time="0.0"/>
+  <testcase name="testRandomStringWithModeIllegal" classname="it.hackcaffebabe.ioutil.random.TestXRandom" time="0.0"/>
+  <testcase name="testRandomIntNumberWithMaxIllegal" classname="it.hackcaffebabe.ioutil.random.TestXRandom" time="0.001"/>
+  <testcase name="testRandomIntNumberWithMinIllegal" classname="it.hackcaffebabe.ioutil.random.TestXRandom" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

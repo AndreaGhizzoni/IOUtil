@@ -25,7 +25,7 @@ public final class XRandom
 	 */
 	public static String getRandomString(int length, Mode mode) throws IllegalArgumentException{
 		if(length <= 0)
-			throw new IllegalArgumentException( "Lenght of String given can not be null or <= 0." );
+			throw new IllegalArgumentException( "Length of String given can not be null or <= 0." );
 		if(mode == null)
 			throw new IllegalArgumentException( "RegExp mode can not be null. Use RegExpMode enum." );
 
@@ -61,7 +61,7 @@ public final class XRandom
 	 * @return {@link Integer} random number between minimum and maximum number.
 	 * @throws IllegalArgumentException if minimum or maximum are less of zero, or minimum is greater than maximum.
 	 */
-	public static Integer getRandomnIntNumber(int min, int max) throws IllegalArgumentException{
+	public static Integer getRandomIntNumber(int min, int max) throws IllegalArgumentException{
 		if(min < 0)
 			throw new IllegalArgumentException( "Minimum number can not be less of zero." );
 		if(max <= 0)
@@ -81,7 +81,7 @@ public final class XRandom
 	 */
 	public static Integer getRandomIntNumber(int maxLength) throws IllegalArgumentException{
 		if(maxLength < 1 || maxLength > 9)
-			throw new IllegalArgumentException( "Max lenght given can not be null or out in range 1-9" );
+			throw new IllegalArgumentException( "Max length given can not be null or out in range 1-9" );
 
 		return Integer.parseInt( generate( String.format( "[0-9]{1,%d}", maxLength ) ) );
 	}
@@ -108,6 +108,9 @@ public final class XRandom
 	 * @return {@link String} representing the random date.
 	 */
 	public static String getRandomDate(Mode dateMode){
+        if(dateMode == null)
+            throw new IllegalArgumentException("Date mode can not be null.");
+
 		String days = "(0?[1-9]|[12][0-9]|3[01])";
 		String months = "(0?[1-9]|1[012])";
 		String years = "(([1-2][1-9][1-9][1-9]))";

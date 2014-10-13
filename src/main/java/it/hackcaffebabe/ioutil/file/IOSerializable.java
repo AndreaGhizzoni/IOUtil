@@ -50,6 +50,7 @@ public final class IOSerializable
 
 		ObjectOutputStream out = new ObjectOutputStream( new FileOutputStream( onFile ) );
 		out.writeObject( serializableFile );
+        out.flush();
 		out.close();
 	}
 
@@ -58,21 +59,21 @@ public final class IOSerializable
 	 * The file MUST be exists, otherwise will be throw a {@link FileNotFoundException}.
 	 * 
 	 * @param classToCast {@link Class} the class to cast the read object.
-	 * @param toFile {@link File} the file to read the serialized object.
+	 * @param fromFile {@link File} the file to read the serialized object.
 	 * @return object of class T, instance of class given by argument <code>classToCast</code>.
 	 * @throws ClassNotFoundException if class to cast not implements {@link Serializable}.
 	 * @throws IllegalArgumentException if argument are null or empty.
 	 * @throws IOException if method can not read file.
 	 */
-	public synchronized static <T> T load(Class<T> classToCast, File toFile) throws IllegalArgumentException,
+	public synchronized static <T> T load(Class<T> classToCast, File fromFile) throws IllegalArgumentException,
 			IOException, ClassNotFoundException{
 		if(classToCast == null)
 			throw new IllegalArgumentException( "Class to cast can not be null!" );
 
-		if(toFile == null || toFile.isDirectory())
+		if(fromFile == null || fromFile.isDirectory())
 			throw new IllegalArgumentException( "File name can not be null or void!" );
 
-		ObjectInputStream in = new ObjectInputStream( new FileInputStream( toFile ) );
+		ObjectInputStream in = new ObjectInputStream( new FileInputStream( fromFile ) );
 		T toReturn = classToCast.cast( in.readObject() );
 		in.close();
 		return toReturn;

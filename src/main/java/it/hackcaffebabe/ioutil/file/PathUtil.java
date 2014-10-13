@@ -46,10 +46,11 @@ public final class PathUtil
 	 * @throws IOException if there are file system issues.
 	 * @throws IllegalArgumentException if argument given are null, the same folder or destination folder is a file.
 	 */
-	public static synchronized void copyDirectory(File source, File destination) throws IOException,
-			IllegalArgumentException{
+	public static synchronized void copyDirectory(File source, File destination) throws IOException, IllegalArgumentException{
 		if(source == null || !source.exists())
 			throw new IllegalArgumentException( "Source file given can not be null or must be exists." );
+        if(destination == null )
+            throw new IllegalArgumentException("Destinations given can not be null.");
 
 		if(source.equals( destination ))
 			throw new IllegalArgumentException( "Source and Destination can not be the same file." );

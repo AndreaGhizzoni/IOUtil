@@ -12,59 +12,60 @@ import org.junit.Test;
 public class TestStringNormalizer
 {
 	@Test
-	public void canRemoveAccentCharacters(){
+	public void testRemovingAccentedCharacters(){
 		String t = StringNormalizer.removeAccentCharacters( "testàèéùìò" );
 		String exp = "testaeeuio";
+        Assert.assertEquals("Can remove accent characters.",exp, t);
 		Assert.assertEquals( exp, t );
 	}
 
 	@Test
-	public void canRemoveFileExtension(){
+	public void testRemovingFileExtension(){
 		String t = StringNormalizer.removeExtension( "test.ext" );
 		String exp = "test";
-		Assert.assertEquals( exp, t );
+		Assert.assertEquals("Can remove file extension.", exp, t );
 	}
 
 	@Test
-	public void canRemovePathCharacters(){
+	public void testRemovingPathCharacters(){
 		String t = StringNormalizer.removePathCharacters( "\\/\t|-\n--asd" );
 		String exp = "asd";
-		Assert.assertEquals( exp, t );
+		Assert.assertEquals( "Can remove path characters.", exp, t );
 	}
 
 	@Test
-	public void canRemoveAccentedCharactersFromEmptyString(){
+	public void testRemovingAccentedCharactersFromEmptyString(){
 		String t = StringNormalizer.removeAccentCharacters( "" );
-		Assert.assertTrue( t.isEmpty() );
+		Assert.assertTrue( "Can not remove characters from empty string.",t.isEmpty() );
 	}
 
 	@Test
-	public void canRemoveAccentedCharactersFromNullString(){
+	public void testRemovingAccentedCharactersFromNullString(){
 		String t = StringNormalizer.removeAccentCharacters( null );
-		Assert.assertTrue( t == null );
+		Assert.assertTrue( "Can not remove characters from null string.",t == null );
 	}
 
 	@Test
-	public void canRemoveFileExtensionFromEmptyString(){
+	public void testRemovingFileExtensionFromEmptyString(){
 		String t = StringNormalizer.removeExtension( "" );
-		Assert.assertTrue( t.isEmpty() );
+		Assert.assertTrue( "Can not remove file extension from empty string.",t.isEmpty() );
 	}
 
 	@Test
-	public void canRemoveFileExtensionFromNullString(){
+	public void testRemovingFileExtensionFromNullString(){
 		String t = StringNormalizer.removeExtension( null );
-		Assert.assertTrue( t == null );
+		Assert.assertTrue( "Can not remove file extension from null string.",t == null );
 	}
 
 	@Test
-	public void canRemovePathCharactersFromEmptyString(){
+	public void testRemovingPathCharactersFromEmptyString(){
 		String t = StringNormalizer.removePathCharacters( "" );
-		Assert.assertTrue( t.isEmpty() );
+		Assert.assertTrue( "Can not remove path characters from empty string.", t.isEmpty() );
 	}
 
 	@Test
-	public void canRemovePathCharactersFromNullString(){
+	public void testRemovingPathCharactersFromNullString(){
 		String t = StringNormalizer.removePathCharacters( null );
-		Assert.assertTrue( t == null );
+		Assert.assertTrue( "Can not remove path characters from empty string.", t == null );
 	}
 }
