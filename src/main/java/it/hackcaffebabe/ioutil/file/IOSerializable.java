@@ -12,12 +12,14 @@ import java.io.Serializable;
 
 /**
  * This class facilitates the Input/Output for serialization operations.<br>
- * For example use this code to store an Integer object on the path "sys/foo/int/int.ser":<br>
+ * For example use this code to store an Integer object on the
+ * path "sys/foo/int/int.ser":<br>
  * <pre>{@code
  * Integer i = new Integer( 42 );
  * IOSerializable.save( i, new File( "sys/foo/int/int.ser" ) );
  * }</pre>
- * And finally use this to retrieve information from serialized object ( for example the previous Integer object ):
+ * And finally use this to retrieve information from serialized
+ * object ( for example the previous Integer object ):
  * <pre>{@code
  * Integer serializedObject = IOSerializable.load( Integer.class, new File( "sys/foo/int/int.ser" ) );
  * }</pre>
@@ -31,14 +33,17 @@ public final class IOSerializable
 
 	/**
 	 * This method serialize an object on a {@link File} given.<br>
-	 * All file specification are set by {@link File} argument ( name, extension, path... ).<br>
-	 * The file could not be exists, it will be created when the object will be written on it,<br> 
-	 * but the path MUST be exists. Otherwise will be throw a {@link FileNotFoundException}.
+	 * All file specification are set by {@link File}
+     * argument ( name, extension, path... ).<br>The file could not be exists,
+     * it will be created when the object will be written on it, but the path
+     * MUST be exists. Otherwise will be throw a {@link FileNotFoundException}.
 	 * 
 	 * @param serializableFile {@link Object} the object to serialize on file.
 	 * @param onFile {@link File} the file to store on disk the serialized object.
-	 * @throws IllegalArgumentException if <code>serializedObject</code> is null or <code>onFile</code> is null or a directory.
-	 * @throws IOException if there are issues to store the file or the path of file is not valid. In this case will be throw a {@link FileNotFoundException}.
+	 * @throws IllegalArgumentException if <code>serializedObject</code> is null
+     * or <code>onFile</code> is null or a directory.
+	 * @throws IOException if there are issues to store the file or the path
+     * of file is not valid. In this case will be throw a {@link FileNotFoundException}.
 	 */
 	public synchronized static void save(Serializable serializableFile, File onFile) throws IllegalArgumentException,
 			IOException{
@@ -56,12 +61,14 @@ public final class IOSerializable
 
 	/**
 	 * This method load an serialized object from file.<br>
-	 * The file MUST be exists, otherwise will be throw a {@link FileNotFoundException}.
-	 * 
+	 * The file MUST be exists, otherwise will be throw
+     * a {@link FileNotFoundException}.
 	 * @param classToCast {@link Class} the class to cast the read object.
 	 * @param fromFile {@link File} the file to read the serialized object.
-	 * @return object of class T, instance of class given by argument <code>classToCast</code>.
-	 * @throws ClassNotFoundException if class to cast not implements {@link Serializable}.
+	 * @return object of class T, instance of class given by argument
+     * <code>classToCast</code>.
+	 * @throws ClassNotFoundException if class to cast not implements
+     * {@link Serializable}.
 	 * @throws IllegalArgumentException if argument are null or empty.
 	 * @throws IOException if method can not read file.
 	 */

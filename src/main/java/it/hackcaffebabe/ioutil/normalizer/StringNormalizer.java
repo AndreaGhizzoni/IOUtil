@@ -8,7 +8,8 @@ package it.hackcaffebabe.ioutil.normalizer;
 public class StringNormalizer
 {
 	/**
-	 * This method replace from the given string all the accent characters whit the respective non-accent.
+	 * This method replace from the given string all the accent characters whit
+     * the respective non-accent.
 	 * @param s {@link String} to normalize.
 	 * @return {@link String} normalized.
 	 */
@@ -34,7 +35,8 @@ public class StringNormalizer
 	}
 
 	/**
-	 * This method remove from the given string the follow characters: -, \t, \n, |, \ and /<br>
+	 * This method remove from the given string the follow characters:
+     * -, \t, \n, |, \ and /<br>
 	 * @param s {@link String} to normalize.
 	 * @return {@link String} normalized.
 	 */
@@ -48,8 +50,10 @@ public class StringNormalizer
 	}
 
 	/**
-	 * This method remove from the given string the follow characters: \t,\n, |, -, \ and /<br>
-	 * Also removes all the '.' characters from the bottom of the string and replace the Accent Characters
+	 * This method remove from the given string the follow characters:
+     * \t,\n, |, -, \ and /<br>
+	 * Also removes all the '.' characters from the bottom of the string and
+     * replace the Accent Characters
 	 * whit the respective non-accent.
 	 * @param s {@link String} to normalize.
 	 * @return {@link String} normalized.

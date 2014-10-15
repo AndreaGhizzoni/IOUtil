@@ -40,11 +40,14 @@ public final class PathUtil
 	public static final String CURRENT_DIRECTORY = System.getProperty( "user.dir" );
 
 	/**
-	 * This method copy recursively all content of source folder to destination folder.
+	 * This method copy recursively all content of source folder
+     * to destination folder.
 	 * @param source {@link File} source folder to copy.
-	 * @param destination {@link File} destination folder where source will be copied.
+	 * @param destination {@link File} destination folder where
+     *                                source will be copied.
 	 * @throws IOException if there are file system issues.
-	 * @throws IllegalArgumentException if argument given are null, the same folder or destination folder is a file.
+	 * @throws IllegalArgumentException if argument given are null,
+     * the same folder or destination folder is a file.
 	 */
 	public static synchronized void copyDirectory(File source, File destination) throws IOException, IllegalArgumentException{
 		if(source == null || !source.exists())
@@ -85,7 +88,8 @@ public final class PathUtil
 	 * @param path {@link File} the file to read content.
 	 * @return {@link String} of his content.
 	 * @throws IOException if read fails
-	 * @throws IllegalArgumentException if argument given is null, not exists or is a directory.
+	 * @throws IllegalArgumentException if argument given is null,
+     * not exists or is a directory.
 	 */
 	public static synchronized String readContent(File path) throws IOException, IllegalArgumentException{
 		if(path == null)
@@ -107,7 +111,8 @@ public final class PathUtil
 	}
 
 	/**
-	 * This method force to read all the content of file given (if exists and is not a directory) without throws no IOException.
+	 * This method force to read all the content of file given
+     * (if exists and is not a directory) without throws no IOException.
 	 * If throws, it returns the content read until that point. 
 	 * @param path {@link File} the file to read content.
 	 * @return {@link String} of his content.

@@ -46,10 +46,13 @@ public final class RegExp
 	}
 
 	/**
-	 * This method check if into the string given are present some of characters given whitespace character, short for [\t\n\x0b\r\f].
-	 * @param stringToCheck {@link String} the string to check if some characters are present.
+	 * This method check if into the string given are present some of characters
+     * given whitespace character, short for [\t\n\x0b\r\f].
+	 * @param stringToCheck {@link String} the string to check if some
+     *                                    characters are present.
 	 * @param specialCharacters {@link Character} the characters to check.
-	 * @return {@link Boolean} true if some characters are present into the string, otherwise false.
+	 * @return {@link Boolean} true if some characters are present into the
+     * string, otherwise false.
 	 * @throws IllegalArgumentException if argument given are null or empty characters.
 	 */
 	public static boolean containsSpecialCharacters(String stringToCheck, char... specialCharacters)
@@ -68,10 +71,13 @@ public final class RegExp
 	}
 
 	/**
-	 * Check if a String is a Phone number in format "+prefix{2}-number{10}" ( without quotes ).
-	 * @param phoneNumber {@link String} the complete phone number in format "+prefix-number" ( without quotes ).
-	 * @return {@link Boolean} true if the phone number is in format "+prefix-number" ( without quotes ).
-	 * @throws IllegalArgumentException if lengths given are less or equal of zero or phone number is null or empty.
+	 * Check if a String is a Phone number in format "+prefix{2}-number{10}".
+	 * @param phoneNumber {@link String} the complete phone number in
+     *                                  format "+prefix-number" ( without quotes ).
+	 * @return {@link Boolean} true if the phone number is in
+     * format "+prefix-number" ( without quotes ).
+	 * @throws IllegalArgumentException if lengths given are less or equal of
+     * zero or phone number is null or empty.
 	 */
 	public static boolean isValidPhoneNumber(String phoneNumber) throws IllegalArgumentException{
 		return check( phoneNumber, IS_VALID_PHONE );
@@ -90,7 +96,8 @@ public final class RegExp
 	/**
 	 * Check if a date is in format dd/mm/yyyy.
 	 * @param date {@link String} string to check with regular expression.
-	 * @return {@link Boolean} true if date is in format dd/mm/yyyy and his fields are correct, otherwise false.
+	 * @return {@link Boolean} true if date is in format dd/mm/yyyy and his
+     * fields are correct, otherwise false.
 	 * @throws IllegalArgumentException if argument are null or empty.
 	 */
 	public static boolean isValidDate(String date) throws IllegalArgumentException{
@@ -100,8 +107,10 @@ public final class RegExp
 	/**
 	 * Check if a date is in format dd/mm/yyyy.
 	 * @param date {@link String} string to check with regular expression.
-	 * @param separator {@link Character} that represent the separator of data fields. It can not be a digits.
-	 * @return {@link Boolean} true if date is in format dd/mm/yyyy and his fields are correct, otherwise false.
+	 * @param separator {@link Character} that represent the separator of data
+     *                                   fields. It can not be a digits.
+	 * @return {@link Boolean} true if date is in format dd/mm/yyyy and his
+     * fields are correct, otherwise false.
 	 * @throws IllegalArgumentException if argument are null or empty.
 	 */
 	public static boolean isValidDate(String date, char separator) throws IllegalArgumentException{
@@ -118,7 +127,8 @@ public final class RegExp
 	/**
 	 * Check if the hours is in format hh:mm:ss.
 	 * @param hours {@link String} string to check with regular expression.
-	 * @return {@link Boolean} true if hours is in format hh:mm:ss and his fields are correct, otherwise false.
+	 * @return {@link Boolean} true if hours is in format hh:mm:ss and his
+     * fields are correct, otherwise false.
 	 * @throws IllegalArgumentException if argument are null or empty.
 	 */
 	public static boolean isValidHours(String hours) throws IllegalArgumentException{

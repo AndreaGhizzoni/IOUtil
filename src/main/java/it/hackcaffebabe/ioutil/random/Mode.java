@@ -1,8 +1,7 @@
 package it.hackcaffebabe.ioutil.random;
 
 /**
- * Enumeration that describe some type of random object gets from {@link XRandom}.<br> 
- * 
+ * Enumeration that describe some type of random object gets from {@link XRandom}.
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
  */

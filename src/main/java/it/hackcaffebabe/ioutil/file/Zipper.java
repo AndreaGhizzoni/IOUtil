@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -12,10 +14,10 @@ import java.util.zip.ZipOutputStream;
  * This class provide the common method to create a Zip file.<br>
  * How to use:<br>
  * <pre>{@code
- * Zipper zip = new Zipper( new File("~/path/to/zip/arch.zip"), new File[]{new File("a.dat"), new File("b.json")} );
+ * Zipper zip = new Zipper( new File("~/path/to/zip/arch.zip") );
+ * for( File f : myListOfFiles )
+ * zip.addFile(f)
  * zip.softZip();
- * (or)
- * zip.forceZip()
  * }</pre>
  * See doc of previous method to decide each one to use.
  * 
@@ -25,40 +27,42 @@ import java.util.zip.ZipOutputStream;
 public final class Zipper
 {
 	private File dst;
-	private File[] lst;
+    private ArrayList<File> lst = new ArrayList<File>();
 
-	/**
-	 * Instance a Zipper object with folder destination and an array of file to put into it.
-	 * @param zipFile {@link File} must be a file .zip, otherwise will be thrown an {@link IllegalArgumentException}.
-	 * @param fileList array of Files to put into the zip.
+    /**
+	 * Instance a Zipper object with the full path of the zip file.
+	 * @param zip {@link File} must be a file .zip, otherwise will be
+     *                        thrown an {@link IllegalArgumentException}.
 	 * @throws IllegalArgumentException if arguments are null.
-	 * @throws IOException if parent folder of zipFile can not be written.
+	 * @throws IOException if parent folder of zip can not be written.
 	 */
-	public Zipper(File zipFile, File[] fileList) throws IllegalArgumentException, IOException{
-		this.setZipFile( zipFile );
-		this.setFileList( fileList );
-	}
+    public Zipper(File zip) throws IllegalArgumentException, IOException{
+        this.setZip(zip);
+    }
 
-//===========================================================================================
+//==============================================================================
 // METHOD
-//===========================================================================================
+//==============================================================================
 	/**
-	 * This method dosn't create the zip file if already exists into specified directory, otherwise will be create.
-	 * @throws IOException if already exists into specified directory or it incurred a problem while opening the zip file. 
+	 * This method doesn't create the zip file if already exists into specified
+     * directory, otherwise will be create.
+	 * @throws IOException if already exists into specified directory or it
+     * incurred a problem while opening the zip file.
 	 */
 	public void softZip() throws IOException{
 		if(dst.exists())
-			throw new IOException( String.format( "%s already exists in %s", dst.getName(), dst.getParent() ) );
+			throw new IOException(String.format("%s already exists in %s", dst.getName(), dst.getParent()));
 		zip();
 	}
 
 	/**
-	 * This method create the zip file in every case. If zip already exists it will deleted and a new one will be create.
+	 * This method create the zip file in every case. If zip already exists
+     * it will deleted and a new one will be create.
 	 * @throws IOException if it incurred a problem while creating the zip file. 
 	 */
 	public void forceZip() throws IOException{
-		if(dst.exists())
-			dst.delete();
+		if(dst.exists() && !dst.delete())
+            throw new IOException("Error while deleting existing zip file.");
 		zip();
 	}
 
@@ -81,38 +85,60 @@ public final class Zipper
 		zos.close();
 	}
 
-//===========================================================================================
+//==============================================================================
 // SETTER
-//===========================================================================================
-	/* set the zip destination path */
-	private void setZipFile(File f) throws IllegalArgumentException, IOException{
+//==============================================================================
+    /**
+     * This method change the zip path.
+     * @param f {@link File} the path of the zip archive.
+     * @throws IllegalArgumentException if file given is null.
+     */
+	public void setZip(File f) throws IllegalArgumentException{
 		if(f == null)
-			throw new IllegalArgumentException( "Zip file can not be null." );
-		if(!f.getParentFile().canWrite())
-			throw new IOException( "Zip file can not be written on: " + f.getParentFile().toString() );
-		if(f.isDirectory())
-			throw new IllegalArgumentException( "Zip path can not be a directory." );
-		f.mkdirs();
+			throw new IllegalArgumentException("Zip file can not be null.");
+        f.getParentFile().mkdirs();
 		this.dst = f;
 	}
 
-	/* set the zip content */
-	private void setFileList(File[] lst) throws IllegalArgumentException{
+    /**
+     * This method add a list of files to the archive.
+     * @param lst {@link java.util.List} of File to add.
+     * @throws IllegalArgumentException if argument given is null or empty list.
+     * @throws IOException if there is a file in the list that doesn't exists.
+     */
+	public void addFiles(List<File> lst) throws IllegalArgumentException, IOException{
 		if(lst == null)
-			throw new IllegalArgumentException( "List of file to zip can not be null." );
-		this.lst = lst;
-	}
+			throw new IllegalArgumentException("List of file to zip can not be null.");
+        if(lst.isEmpty())
+            throw new IllegalArgumentException("List of file to zip can not be empty.");
+        for( File f  : lst )
+            addFile(f);
+    }
 
-//===========================================================================================
+    /**
+     * This method add a single file to the archive.
+     * @param f {@link File} the file to add.
+     * @throws IllegalArgumentException if file is null.
+     * @throws IOException if file doesn't exists.
+     */
+    public void addFile(File f) throws IllegalArgumentException, IOException{
+        if(f == null)
+            throw new IllegalArgumentException("File to zip can not be null.");
+        if(!f.exists())
+            throw new IOException("File added does not exists.");
+        this.lst.add(f);
+    }
+
+//==============================================================================
 // GETTER
-//===========================================================================================
+//==============================================================================
 	/** @return {@link File} the zip path. */
-	public File getDestinationFolder(){
+	public File getPath(){
 		return this.dst;
 	}
 
-	/** @return Array of {@link File} zip content. */
-	public File[] getFiles(){
+	/** @return {@link ArrayList} of {@link File}. */
+	public ArrayList<File> getFiles(){
 		return this.lst;
 	}
 }

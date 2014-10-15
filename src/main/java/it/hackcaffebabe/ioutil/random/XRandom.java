@@ -3,11 +3,9 @@ package it.hackcaffebabe.ioutil.random;
 import java.util.Random;
 import nl.flotsam.xeger.Xeger;
 
-
 /**
- * Simple library that provide some methods to generate random data for testing purpose.<br>
+ * Simple library that provide some methods to generate random data for testing purpose.
  * This is made possible by Xeger class http://code.google.com/p/xeger/
- *  
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
  */
@@ -18,10 +16,11 @@ public final class XRandom
 	/**
 	 * This method generate a Random String with length and mode given.
 	 * @param length {@link Integer} of the String
-	 * @param mode {@link Mode} of String generation.<br>
-	 * 		  String with all UPPER case, lower case, First Char Upper, BoTh Of ThEm or CamelCase.
+	 * @param mode {@link Mode} of String generation. String with all UPPER case,
+     *                         lower case, First Char Upper, BoTh Of ThEm or CamelCase.
 	 * @return {@link String} generated random String.
-	 * @throws IllegalArgumentException if argument given are null or length less or equal to 0
+	 * @throws IllegalArgumentException if argument given are null or length
+     * less or equal to 0
 	 */
 	public static String getRandomString(int length, Mode mode) throws IllegalArgumentException{
 		if(length <= 0)
@@ -55,11 +54,13 @@ public final class XRandom
 	}
 
 	/**
-	 * This method returns a random number between minimum and maximum number ( included ). 
+	 * This method returns a random number between minimum and
+     * maximum number ( included ).
 	 * @param min {@link Integer} the minimum number of range.
 	 * @param max {@link Integer} the maximum number of range.
 	 * @return {@link Integer} random number between minimum and maximum number.
-	 * @throws IllegalArgumentException if minimum or maximum are less of zero, or minimum is greater than maximum.
+	 * @throws IllegalArgumentException if minimum or maximum are less of zero,
+     * or minimum is greater than maximum.
 	 */
 	public static Integer getRandomIntNumber(int min, int max) throws IllegalArgumentException{
 		if(min < 0)
@@ -128,8 +129,10 @@ public final class XRandom
 	}
 
 	/**
-	 * This method return a random email in format uuuu.uuuu@dddd.ddd or uuuu.uuuu@dddd.dd
-	 * @return {@link String} return a random email in format uuuu.uuuu@dddd.ddd or uuuu.uuuu@dddd.dd
+	 * This method return a random email in format uuuu.uuuu@dddd.ddd or
+     * uuuu.uuuu@dddd.dd
+	 * @return {@link String} return a random email in format
+     * uuuu.uuuu@dddd.ddd or uuuu.uuuu@dddd.dd
 	 */
 	public static String getRandomEmail(){
 		return generate( "[a-z]{4}[.][a-z]{4}[@][a-z]{4}[.]([a-z]{3}|[a-z]{2})" );
@@ -152,17 +155,16 @@ public final class XRandom
 	}
 
 	/**
-	 * This is the core method. It's generates specific string from Regular Expression given.
-	 * 
-	 * ************************************************************************************
-	 * ********************************* IMPORTANT ****************************************
-	 * ************************************************************************************
-	 * ==                                                                                ==
-	 * == This method may be cause of StackOverflow with Regular Expression too complex. ==
-	 * ==                                                                                ==
-	 * ************************************************************************************
-	 * ********************************* IMPORTANT ****************************************
-	 * ************************************************************************************
+	 * This is the core method. It's generates specific string from Regular
+     * Expression given.
+	 * *************************************************************************
+	 * **************************** IMPORTANT **********************************
+	 * *************************************************************************
+	 * ==            This method may be cause of StackOverflow with           ==
+     * ==            Regular Expression too complex.                          ==
+	 * *************************************************************************
+	 * **************************** IMPORTANT **********************************
+	 * *************************************************************************
 	 * 
 	 */
 	private static String generate(String regex){
