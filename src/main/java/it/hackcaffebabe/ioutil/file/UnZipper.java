@@ -11,12 +11,13 @@ import java.util.zip.ZipInputStream;
 
 
 /**
- * This class provide the common method to unzip a .zip file.<br>
- * How to use:<br>
+ * This class provide the common method to unzip a .zip file. How to use:
  * <pre>{@code
- * UnZipper uzip = new UnZipper( new File("~/path/to/zip/arch.zip"), new File("~/") );
- * uzip.listZipContent(); (To ONLY view the zip content)
- * uzip.unZip(); (To unzip all the content)
+ * File src = new File("~/path/to/zip/arch.zip");
+ * File dst = new File("~/");
+ * UnZipper uzip = new UnZipper( src, dst );
+ * uzip.listZipContent(); //(To ONLY view the zip content)
+ * uzip.unZip(); //(To unzip all the content)
  * }</pre>
  * 
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
@@ -28,20 +29,23 @@ public final class UnZipper
 	private File dst;
 
 	/**
-	 * Instance the UnZipper object to unzip all the content into destination folder given.
+	 * Instance the UnZipper object to unzip all the content into destination
+     * folder given.
 	 * @param zip {@link File} the zip source file.
-	 * @param dstFolder {@link File} the destination folder to unzip all the content.
+	 * @param dstFolder {@link File} the destination folder to unzip
+     *                              all the content.
 	 * @throws IllegalArgumentException if argument given are null.
-	 * @throws IOException if into destination folder given can be written the zip content.
+	 * @throws IOException if into destination folder given can be written the
+     * zip content.
 	 */
 	public UnZipper(File zip, File dstFolder) throws IllegalArgumentException, IOException{
 		this.setZipSource( zip );
 		this.setDestinationFolder( dstFolder );
 	}
 
-//===========================================================================================
+//==============================================================================
 // METHOD
-//===========================================================================================
+//==============================================================================
 	/**
 	 * This method list all the zip content.
 	 * @return {@link List} of zip content as {@link String}
@@ -61,22 +65,28 @@ public final class UnZipper
 	}
 
 	/**
-	 * This method unzip all the zip content into the destination folder given.<br>
-	 * Pass true as argument if you want to skip the file if it's already exists into destination folder, 
+	 * This method unzip all the zip content into the destination folder given.
+	 * Pass true as argument if you want to skip the file if it's already exists
+     * into destination folder,
 	 * otherwise it will be rewritten.
-	 * @param skipIfExists {@link Boolean} true to skip the file if already exists, otherwise false.
+	 * @param skipIfExists {@link Boolean} true to skip the file if already
+     *                                    exists, otherwise false.
 	 * @return {@link List} of File that are unzipped into destination folder.
 	 * @throws IOException if it incurred a problem while extracts files. 
 	 */
 	public List<File> unZipAll(boolean skipIfExists) throws IOException{
 		List<File> lstFileLoaded = new ArrayList<File>();
 		ZipInputStream zis = new ZipInputStream( new FileInputStream( this.src ) );
-		ZipEntry ze = zis.getNextEntry();
-		while( ze != null ) {
+		ZipEntry ze;
+		while( (ze = zis.getNextEntry()) != null ) {
 			File newFile = new File( this.dst + PathUtil.FILE_SEPARATOR + ze.getName() );
-			if(!skipIfExists) {
-				//create the file. if file already exists, skip it
-				//new File( newFile.getParent() ).mkdirs();
+            if(newFile.exists() && skipIfExists )//if file already exists, skip it
+                continue;
+
+            if(ze.isDirectory()){
+                newFile.mkdirs();
+                continue;
+            }else{
 				FileOutputStream fos = new FileOutputStream( newFile );
 				int len;
 				byte[] buffer = new byte[1024];
@@ -84,9 +94,9 @@ public final class UnZipper
 					fos.write( buffer, 0, len );
 				}
 				fos.close();
-				lstFileLoaded.add( newFile );
 			}
-			ze = zis.getNextEntry();
+
+            lstFileLoaded.add( newFile );
 		}
 		zis.closeEntry();
 		zis.close();
@@ -94,9 +104,12 @@ public final class UnZipper
 	}
 
 	/**
-	 * This method extract from zip all the file that are into the list of {@link String} given.<br>
-	 * The string inside the list must be exactly the same as the name of file into the zip, otherwise this method will skip it.
-	 * @param lstFilesToUnzip {@link List} of String to match with the name of file inside the zip. if null this method returns null.
+	 * This method extract from zip all the file that are into the list of
+     * {@link String} given. The string inside the list must be exactly the same
+     * as the name of file into the zip, otherwise this method will skip it.
+	 * @param lstFilesToUnzip {@link List} of String to match with the name of
+     *                                    file inside the zip. if null this
+     *                                    method returns null.
 	 * @return {@link List} of file extracted in this way.
 	 * @throws IOException if it incurred a problem while extract files.
 	 */
@@ -128,9 +141,9 @@ public final class UnZipper
 		return filesLoaded;
 	}
 
-//===========================================================================================
+//==============================================================================
 // SETTER
-//===========================================================================================
+//==============================================================================
 	/* set the zip source file. */
 	private void setZipSource(File zip) throws IllegalArgumentException, IOException{
 		if(zip == null)
@@ -154,9 +167,9 @@ public final class UnZipper
 		this.dst = folder;
 	}
 
-//===========================================================================================
+//==============================================================================
 // GETTER
-//===========================================================================================
+//==============================================================================
 	/** @return {@link File} the source zip file. */
 	public File getSourceZipFile(){
 		return this.src;

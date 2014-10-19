@@ -5,7 +5,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Stack;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -70,17 +72,15 @@ public final class Zipper
 	private synchronized void zip() throws IOException{
 		ZipOutputStream zos = new ZipOutputStream( new FileOutputStream( this.dst ) );
 		for(File f: this.lst) {
-			if(f != null) {
-				zos.putNextEntry( new ZipEntry( f.getName() ) );
-				FileInputStream in = new FileInputStream( f );
-				byte[] buffer = new byte[1024];
-				int len;
-				while( (len = in.read( buffer )) > 0 ) {
-					zos.write( buffer, 0, len );
-				}
-				in.close();
-				zos.closeEntry();
-			}
+            zos.putNextEntry( new ZipEntry(f.getPath()) );
+            FileInputStream in = new FileInputStream(f);
+            byte[] buffer = new byte[1024];
+            int len;
+            while ((len = in.read(buffer)) > 0) {
+                zos.write(buffer, 0, len);
+            }
+            in.close();
+            zos.closeEntry();
 		}
 		zos.close();
 	}
@@ -116,7 +116,7 @@ public final class Zipper
     }
 
     /**
-     * This method add a single file to the archive.
+     * This method add a single file or directory to the archive.
      * @param f {@link File} the file to add.
      * @throws IllegalArgumentException if file is null.
      * @throws IOException if file doesn't exists.
@@ -125,8 +125,13 @@ public final class Zipper
         if(f == null)
             throw new IllegalArgumentException("File to zip can not be null.");
         if(!f.exists())
-            throw new IOException("File added does not exists.");
-        this.lst.add(f);
+            throw new IOException(String.format("File %s added does not exists.", f.getName()));
+        if(f.isDirectory()){
+            for(File file : f.listFiles() )
+                addFile(file);
+        }else{
+            this.lst.add(f);
+        }
     }
 
 //==============================================================================
