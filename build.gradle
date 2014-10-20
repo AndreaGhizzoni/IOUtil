@@ -1,7 +1,8 @@
 apply plugin: 'java'
 
 sourceCompatibility = 1.8
-version = '1.3.3'
+targetCompatibility = 1.8
+version = '1.3.4'
 
 repositories {
     mavenCentral()
@@ -14,4 +15,12 @@ dependencies {
 
 jar {
    from {configurations.compile.collect {zipTree(it)}}
+}
+
+/* this will create a jar with javadoc */
+task jardoc(dependsOn: javadoc, type: Jar){
+    baseName = 'IOUtil-javadoc'
+    destinationDir = file('build/libs')
+    from sourceSets.main.allJava
+    includes['build/docs/javadoc/*']
 }
