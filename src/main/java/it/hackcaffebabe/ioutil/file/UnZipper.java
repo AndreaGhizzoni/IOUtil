@@ -15,9 +15,9 @@ import java.util.zip.ZipInputStream;
  * <pre>{@code
  * File src = new File("~/path/to/zip/arch.zip");
  * File dst = new File("~/");
- * UnZipper uzip = new UnZipper( src, dst );
- * uzip.listZipContent(); //(To ONLY view the zip content)
- * uzip.unZip(); //(To unzip all the content)
+ * UnZipper unzip = new UnZipper( src, dst );
+ * System.out.println( unzip.listZipContent() ); //(To ONLY view the zip content)
+ * unzip.unZip(); //(To unzip all the content)
  * }</pre>
  * 
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
@@ -27,6 +27,7 @@ public final class UnZipper
 {
 	private File src;
 	private File dst;
+    private ArrayList<File> content = new ArrayList<File>();
 
 	/**
 	 * Instance the UnZipper object to unzip all the content into destination
@@ -48,20 +49,20 @@ public final class UnZipper
 //==============================================================================
 	/**
 	 * This method list all the zip content.
-	 * @return {@link List} of zip content as {@link String}
+	 * @return {@link ArrayList} of zip content as {@link File}
 	 * @throws IOException if it incurred a problem while opening the zip file. 
 	 */
-	public synchronized List<String> listZipContent() throws IOException{
-		List<String> toReturn = new ArrayList<String>();
+	public synchronized ArrayList<File> listZipContent() throws IOException{
+        this.content.clear();
 		ZipInputStream zis = new ZipInputStream( new FileInputStream( this.src ) );
 		ZipEntry ze = zis.getNextEntry();
-		while( ze != null ) {
-			toReturn.add( ze.getName() );
+		while( ze != null ){
+			this.content.add( new File(ze.getName() ) );
 			ze = zis.getNextEntry();
 		}
 		zis.closeEntry();
 		zis.close();
-		return toReturn;
+        return this.content;
 	}
 
 	/**
@@ -74,30 +75,16 @@ public final class UnZipper
 	 * @return {@link List} of File that are unzipped into destination folder.
 	 * @throws IOException if it incurred a problem while extracts files. 
 	 */
-	public List<File> unZipAll(boolean skipIfExists) throws IOException{
+	public synchronized List<File> unZipAll(boolean skipIfExists) throws IOException{
 		List<File> lstFileLoaded = new ArrayList<File>();
 		ZipInputStream zis = new ZipInputStream( new FileInputStream( this.src ) );
 		ZipEntry ze;
+        File tmp;
 		while( (ze = zis.getNextEntry()) != null ) {
-			File newFile = new File( this.dst + PathUtil.FILE_SEPARATOR + ze.getName() );
-            if(newFile.exists() && skipIfExists )//if file already exists, skip it
-                continue;
-
-            if(ze.isDirectory()){
-                newFile.mkdirs();
-                continue;
-            }else{
-				FileOutputStream fos = new FileOutputStream( newFile );
-				int len;
-				byte[] buffer = new byte[1024];
-				while( (len = zis.read( buffer )) > 0 ) {
-					fos.write( buffer, 0, len );
-				}
-				fos.close();
-			}
-
-            lstFileLoaded.add( newFile );
-		}
+            tmp = unzipFile(zis, ze, skipIfExists);
+            if(tmp != null)
+                lstFileLoaded.add( tmp );
+        }
 		zis.closeEntry();
 		zis.close();
 		return lstFileLoaded;
@@ -113,33 +100,46 @@ public final class UnZipper
 	 * @return {@link List} of file extracted in this way.
 	 * @throws IOException if it incurred a problem while extract files.
 	 */
-	public List<File> unZipSelective(List<String> lstFilesToUnzip) throws IOException{
+	public synchronized List<File> unZipSelective(List<String> lstFilesToUnzip) throws IOException{
 		if(lstFilesToUnzip == null)
 			return null;
 
 		List<File> filesLoaded = new ArrayList<File>();
 		ZipInputStream zis = new ZipInputStream( new FileInputStream( this.src ) );
-		ZipEntry ze = zis.getNextEntry();
-		while( ze != null ) {
+		ZipEntry ze;
+        File newFile;
+		while( ( ze = zis.getNextEntry() )!= null ) {
 			if(lstFilesToUnzip.contains( ze.getName() )) {
-				File newFile = new File( this.dst + PathUtil.FILE_SEPARATOR + ze.getName() );
-				//create the file. if file already exists, skip it
-				//new File( newFile.getParent() ).mkdirs();
-				FileOutputStream fos = new FileOutputStream( newFile );
-				int len;
-				byte[] buffer = new byte[1024];
-				while( (len = zis.read( buffer )) > 0 ) {
-					fos.write( buffer, 0, len );
-				}
-				fos.close();
-				filesLoaded.add( newFile );
+                newFile = unzipFile(zis,ze, false);
+                if(newFile != null);
+                    filesLoaded.add( newFile );
 			}
-			ze = zis.getNextEntry();
 		}
 		zis.closeEntry();
 		zis.close();
 		return filesLoaded;
 	}
+
+    /* this method unzip a single file */
+    private synchronized File unzipFile(ZipInputStream zis, ZipEntry ze, boolean skipIfExists) throws IOException{
+        File tmp = new File( String.format("%s%s%s", this.dst,PathUtil.FILE_SEPARATOR,ze.getName()) );
+        if(tmp.exists() && skipIfExists )//if file already exists, skip it
+            return null;
+
+        if(ze.isDirectory()){
+            tmp.mkdirs();
+            return null;
+        }else{
+            byte[] buffer = new byte[1024];
+            FileOutputStream fos = new FileOutputStream( tmp );
+            int len;
+            while( (len = zis.read( buffer )) > 0 ) {
+                fos.write( buffer, 0, len );
+            }
+            fos.close();
+        }
+        return tmp;
+    }
 
 //==============================================================================
 // SETTER
@@ -179,4 +179,17 @@ public final class UnZipper
 	public File getDestinationFolder(){
 		return this.dst;
 	}
+
+    /** @return {@link ArrayList} of {@link File} that are the zip content. */
+    public ArrayList<File> getContent(){
+        if(this.content == null) {
+            try {
+                return listZipContent();
+            } catch (IOException e) {
+                return null;
+            }
+        }else{
+            return this.content;
+        }
+    }
 }

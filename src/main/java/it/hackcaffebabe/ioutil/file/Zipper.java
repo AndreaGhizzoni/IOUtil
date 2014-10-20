@@ -5,20 +5,26 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Stack;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 
 /**
  * This class provide the common method to create a Zip file.<br>
- * How to use:<br>
+ * This class can archive ONLY file! For example:
+ * <pre>{@code
+ * File dir = new File("/path/to/dirs");
+ * Zipper z = new Zipper("archive.zip");
+ * z.addFile(dir);
+ * z.forceZip();
+ * }</pre>
+ * In this case all the files from /path/to/dirs this folder are archived. No
+ * folder structure are stored in the archive. Another example:
  * <pre>{@code
  * Zipper zip = new Zipper( new File("~/path/to/zip/arch.zip") );
  * for( File f : myListOfFiles )
- * zip.addFile(f)
+ *    zip.addFile(f)
  * zip.softZip();
  * }</pre>
  * See doc of previous method to decide each one to use.
@@ -72,7 +78,7 @@ public final class Zipper
 	private synchronized void zip() throws IOException{
 		ZipOutputStream zos = new ZipOutputStream( new FileOutputStream( this.dst ) );
 		for(File f: this.lst) {
-            zos.putNextEntry( new ZipEntry(f.getPath()) );
+            zos.putNextEntry( new ZipEntry( shrinkPath(f) ));
             FileInputStream in = new FileInputStream(f);
             byte[] buffer = new byte[1024];
             int len;
@@ -84,6 +90,15 @@ public final class Zipper
 		}
 		zos.close();
 	}
+
+    /* cuts the path of file given */
+    private String shrinkPath(File f){
+        String fullPath = f.getAbsolutePath();
+        String parentPath = f.getParentFile().getAbsolutePath();
+        int fpLength = fullPath.length();
+        int ppLength = parentPath.length();
+        return fullPath.substring(ppLength+1,fpLength);
+    }
 
 //==============================================================================
 // SETTER
@@ -106,13 +121,13 @@ public final class Zipper
      * @throws IllegalArgumentException if argument given is null or empty list.
      * @throws IOException if there is a file in the list that doesn't exists.
      */
-	public void addFiles(List<File> lst) throws IllegalArgumentException, IOException{
+	public void addAll(List<File> lst) throws IllegalArgumentException, IOException{
 		if(lst == null)
 			throw new IllegalArgumentException("List of file to zip can not be null.");
         if(lst.isEmpty())
             throw new IllegalArgumentException("List of file to zip can not be empty.");
         for( File f  : lst )
-            addFile(f);
+            add(f);
     }
 
     /**
@@ -121,14 +136,14 @@ public final class Zipper
      * @throws IllegalArgumentException if file is null.
      * @throws IOException if file doesn't exists.
      */
-    public void addFile(File f) throws IllegalArgumentException, IOException{
+    public void add(File f) throws IllegalArgumentException, IOException{
         if(f == null)
             throw new IllegalArgumentException("File to zip can not be null.");
         if(!f.exists())
             throw new IOException(String.format("File %s added does not exists.", f.getName()));
         if(f.isDirectory()){
             for(File file : f.listFiles() )
-                addFile(file);
+                add(file);
         }else{
             this.lst.add(f);
         }

@@ -24,7 +24,7 @@ public class TestZipper {
             for(int i = 0; i<5; i++) {
                 tmp = new File(String.format("/tmp/fileFirst%s.txt", i) );
                 tmp.createNewFile();
-                z.addFile(tmp);
+                z.add(tmp);
             }
             z.softZip();
         }catch (IllegalArgumentException ei){
@@ -47,7 +47,7 @@ public class TestZipper {
                 tmp.createNewFile();
                 lst.add(tmp);
             }
-            z.addFiles(lst);
+            z.addAll(lst);
             zip.createNewFile();
             z.forceZip();
         }catch (Exception e){
@@ -68,7 +68,7 @@ public class TestZipper {
                 tmp.createNewFile();
                 lst.add(tmp);
             }
-            z.addFiles(lst);
+            z.addAll(lst);
 
             Assert.assertTrue("Can add a list of Files.", lst.equals(z.getFiles()));
         }catch (Exception e){
@@ -105,7 +105,7 @@ public class TestZipper {
         boolean t = false;
         try {
             Zipper z = new Zipper(new File("~/test.zip"));
-            z.addFile(null);
+            z.add(null);
         }catch (Exception e){
             t = true;
         }
@@ -117,7 +117,7 @@ public class TestZipper {
         boolean t = false;
         try {
             Zipper z = new Zipper(new File("~/test.zip"));
-            z.addFile(new File("/this/file/does/not/exists.txt"));
+            z.add(new File("/this/file/does/not/exists.txt"));
         }catch (Exception e){
             t = true;
         }
@@ -129,7 +129,7 @@ public class TestZipper {
         boolean t = false;
         try {
             Zipper z = new Zipper(new File("~/test.zip"));
-            z.addFiles( null );
+            z.addAll(null);
         }catch (Exception e){
             t = true;
         }
@@ -141,7 +141,7 @@ public class TestZipper {
         boolean t = false;
         try {
             Zipper z = new Zipper(new File("~/test.zip"));
-            z.addFiles( new ArrayList<File>());
+            z.addAll(new ArrayList<File>());
         }catch (Exception e){
             t = true;
         }
