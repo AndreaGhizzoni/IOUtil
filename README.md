@@ -1,5 +1,5 @@
 # IOUtil
-[![Version](http://img.shields.io/badge/version-1.3.4-green.svg?)](https://github.com/AndreaGhizzoni/IOUtil/releases/tag/v1.3.4) [![License](http://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT) ![Status](http://img.shields.io/badge/build-STABLE-yellow.svg) 
+[![Version](http://img.shields.io/badge/version-1.3.4-blue.svg?)](https://github.com/AndreaGhizzoni/IOUtil/releases/tag/v1.3.4) [![License](http://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT) ![Status](http://img.shields.io/badge/build-STABLE-green.svg) 
 [![Dependecies](http://img.shields.io/badge/dependency-Java 8-red.svg?)](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html)
 
 ## Before to start...
