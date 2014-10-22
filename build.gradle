@@ -21,6 +21,6 @@ jar {
 task jardoc(dependsOn: javadoc, type: Jar){
     baseName = 'IOUtil-javadoc'
     destinationDir = file('build/libs')
-    from sourceSets.main.allJava
+    from javadoc.destinationDir 
     includes['build/docs/javadoc/*']
 }
