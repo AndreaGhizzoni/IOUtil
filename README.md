@@ -3,7 +3,7 @@
 [![Dependecies](http://img.shields.io/badge/dependency-Java 8-red.svg?)](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html)
 
 ## Before to start...
-Add the ready-to-use jars (main and docs) files from *build/libs* to your class path. Check out the *build/docs* folder to have all the information about this library
+Add the ready-to-use jars (main and docs) files from *build/libs* to your class path. Check out the jar file to have all the information about this library
 
 ## How to use:
 In this library there are:
